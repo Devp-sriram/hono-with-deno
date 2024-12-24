@@ -1,4 +1,4 @@
-import { verifyJwt } from "./jwt.ts";
+// import { verifyJwt } from "./jwt.ts";
 import { getCookie } from "@hono/hono/cookie";
 import type { Context, Next } from "@hono/hono";
 import { HTTPException } from "@hono/hono/http-exception";
@@ -21,7 +21,7 @@ const checkAuth = async (
   ) {
     const jwtFromCookie = getCookie(ctx, "jwt");
     console.log(jwtFromCookie);
-    let jwtSignature: string = "";
+    // let jwtSignature: string = "";
 
     const authHeader = ctx.req.header("Authorization");
     if (!authHeader) {
@@ -36,25 +36,25 @@ const checkAuth = async (
         message: "You are not allowed to modify this resource.",
       });
     }
-    jwtSignature = jwtSig;
-    if (
-      (jwtFromCookie === jwtSignature)
-    ) {
-      const jwtCookieValue = await verifyJwt(jwtFromCookie);
-      const jwtAuthValue = await verifyJwt(jwtSig);
-      const verified = jwtAuthValue.email === jwtCookieValue.email;
-      console.log("Is verified?", verified);
-      if (!verified) {
-        throw new HTTPException(403, {
-          message: "You are not allowed to modify this resource.",
-        });
-      } else {
-        return await next();
-      }
-    }
-    throw new HTTPException(403, {
-      message: "You are not allowed to modify this resource.",
-    });
+    // jwtSignature = jwtSig;
+    // if (
+    //   (jwtFromCookie === jwtSignature)
+    // ) {
+    //   const jwtCookieValue = await verifyJwt(jwtFromCookie);
+    //   const jwtAuthValue = await verifyJwt(jwtSig);
+    //   const verified = jwtAuthValue.email === jwtCookieValue.email;
+    //   console.log("Is verified?", verified);
+    //   if (!verified) {
+    //     throw new HTTPException(403, {
+    //       message: "You are not allowed to modify this resource.",
+    //     });
+    //   } else {
+    //     return await next();
+    //   }
+    // }
+    // throw new HTTPException(403, {
+    //   message: "You are not allowed to modify this resource.",
+    // });
   }
   await next();
 };
